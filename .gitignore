@@ -1,7 +1,2 @@
-*.c
-*.h
-*.id
-*.o
-*.out
-*.ecf
+main
 EIFGENs/
