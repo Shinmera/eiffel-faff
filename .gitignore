@@ -3,3 +3,5 @@
 *.id
 *.o
 *.out
+*.ecf
+EIFGENs/
