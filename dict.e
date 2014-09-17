@@ -10,24 +10,24 @@ feature {}
 
 feature
 
-	make is
+	make
 		do
 			create dictionary.make
 		end
 
-	make_dict(word_list: LINKED_LIST[WORD]) is
+	make_dict(word_list: LINKED_LIST[WORD])
 		do
 			dictionary := word_list.twin
 		end
 
-	add_word(word: WORD): WORD is
+	add_word(word: WORD): WORD
 		do
 			create dictionary.make
 			Result := word
-			dictionary.add_first(word)
+			dictionary.put_front(word)
 		end
 
-	add_term(term, translation: STRING): WORD is
+	add_term(term, translation: STRING): WORD
 		local
 			word: WORD
 		do
@@ -35,40 +35,41 @@ feature
 			Result := add_word(word)
 		end
 
-	start is
+	start
 		do
 			dictionary.start
 		end
 
-	next: WORD is
+	next: WORD
 		do
 			dictionary.forth
-			dictionary.item
+			Result := dictionary.item
 		end
 
-	exhausted: BOOLEAN is
+	exhausted: BOOLEAN
 		do
 			Result := dictionary.exhausted
 		end
 
-	shuffled: DICT is
+	shuffled: DICT
 		local
+			dict: DICT
 			shuf: LINKED_LIST[WORD]
 			count: INTEGER
-			i: INTEGER
 			rng: FUCK_RANDOM
 		do
 			create rng.make
 			shuf := dictionary.twin
 			count := shuf.count
 			
-			from i := count - 1
-			until i <= 0
+			from shuf.finish
+			until shuf.isfirst
 			loop
-				shuf.swap(rng.get(i, count), i)
-				i := i - 1
+				shuf.back
+				shuf.swap(rng.get(shuf.index, count))
 			end
 
-			Result := shuf
+			create dict.make_dict(shuf)
+			Result := dict
 		end
 end

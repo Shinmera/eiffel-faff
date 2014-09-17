@@ -10,33 +10,33 @@ feature
 	terms: LINKED_LIST[STRING]
 	translations: LINKED_LIST[STRING]
 
-	make_empty is
+	make_empty
 		do
 			create terms.make
 			create translations.make
 		end
 
-	make_simple(term, translation: STRING) is
+	make_simple(term, translation: STRING)
 		do
 			create terms.make
 			create translations.make
-			terms.add_first(term)
-			translations.add_first(translation)
+			terms.put_front(term)
+			translations.put_front(translation)
 		end
 	
-	make (term_list, translation_list: LINKED_LIST[STRING]) is
+	make (term_list, translation_list: LINKED_LIST[STRING])
 		do
 			terms := term_list
 			translations := translation_list
 		end
 
-	is_translation(term: STRING): BOOLEAN is
+	is_translation(term: STRING): BOOLEAN
 		do
 			Result := False
 			from terms.start
 			until terms.exhausted or Result
 			loop
-				if term.same_as(terms.item) then
+				if term.is_case_insensitive_equal(terms.item) then
 					Result := True
 				end
 				terms.forth

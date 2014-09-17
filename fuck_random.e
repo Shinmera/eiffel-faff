@@ -8,12 +8,12 @@ feature {}
 	rng: RANDOM
 
 feature
-	make is
+	make
 		do
-			create rng
+			create rng.make
 		end
 	
-	get(start, stop:INTEGER): INTEGER is
+	get(start, stop:INTEGER): INTEGER
 		do
 			rng.forth
 			Result := rng.item \\ stop + start
