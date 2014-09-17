@@ -4,16 +4,12 @@ class TRAINER
 create
 	make
 
-feature {}
-	dict: DICT
-
 feature
+	dict: DICT
+	
 	make
 		do
 			create dict.make
-			dict.add_term("dick", "butt")
-			dict.add_term("foo", "bar")
-			dict.add_term("something", "else")
 		end
 
 	train
