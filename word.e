@@ -16,12 +16,12 @@ feature
 			create translations.make
 		end
 
-	make_simple(term, translation: STRING)
+	make_simple(first_term, first_translation: STRING)
 		do
 			create terms.make
 			create translations.make
-			terms.put_front(term)
-			translations.put_front(translation)
+			terms.force(first_term)
+			translations.force(first_translation)
 		end
 	
 	make (term_list, translation_list: LINKED_LIST[STRING])
@@ -30,16 +30,27 @@ feature
 			translations := translation_list
 		end
 
-	is_translation(term: STRING): BOOLEAN
+	is_translation(answer: STRING): BOOLEAN
 		do
 			Result := False
-			from terms.start
-			until terms.exhausted or Result
+			from translations.start
+			until translations.exhausted or Result
 			loop
-				if term.is_case_insensitive_equal(terms.item) then
+				if translations.item.is_case_insensitive_equal(answer) then
 					Result := True
 				end
-				terms.forth
+				translations.forth
 			end
 		end
+
+	term: STRING
+		do
+			Result := terms.at(0)
+		end
+
+	translation: STRING
+		do
+			Result := translations.at(0)
+		end
+	
 end

@@ -5,68 +5,46 @@ create
 	make,
 	make_dict
 
-feature {}
-	dictionary: LINKED_LIST[WORD]
-
 feature
+	words: LINKED_LIST[WORD]
 
 	make
 		do
-			create dictionary.make
+			create words.make
 		end
 
 	make_dict(word_list: LINKED_LIST[WORD])
 		do
-			dictionary := word_list.twin
+			words := word_list.twin
 		end
 
-	add_word(word: WORD): WORD
+	add_word(word: WORD)
 		do
-			create dictionary.make
-			Result := word
-			dictionary.put_front(word)
+			words.force(word)
 		end
 
-	add_term(term, translation: STRING): WORD
+	add_term(term, translation: STRING)
 		local
 			word: WORD
 		do
 			create word.make_simple(term, translation)
-			Result := add_word(word)
-		end
-
-	start
-		do
-			dictionary.start
-		end
-
-	next: WORD
-		do
-			dictionary.forth
-			Result := dictionary.item
-		end
-
-	exhausted: BOOLEAN
-		do
-			Result := dictionary.exhausted
+			add_word(word)
 		end
 
 	shuffled: DICT
 		local
 			dict: DICT
 			shuf: LINKED_LIST[WORD]
-			count: INTEGER
 			rng: FUCK_RANDOM
 		do
 			create rng.make
-			shuf := dictionary.twin
-			count := shuf.count
+			shuf := words.deep_twin
 			
-			from shuf.finish
-			until shuf.isfirst
+			from shuf.start
+			until shuf.exhausted
 			loop
-				shuf.back
-				shuf.swap(rng.get(shuf.index, count))
+				shuf.swap(rng.get(shuf.index-1, shuf.count))
+				shuf.forth
 			end
 
 			create dict.make_dict(shuf)
